@@ -18,7 +18,15 @@ func main() {
 			link := e.Attr("href")
 			// Print link
 			fmt.Printf("Link found: %q -> %s\n", e.Text, link)
+			//Visit each link
+			c.Visit("https://www.lyricsfreak.com/d/drake/" + link)
 		})
+	})
+
+	// On every a element which has href attribute call callback
+	c.OnHTML("#cmn_wrap > div.content.song-content.floatfix.js-lyric-desktop.js-lyric-vote > div > div.maincont.lyrics-content > div.js-share-text", func(e *colly.HTMLElement) {
+		fmt.Printf(e.Text)
+
 	})
 
 	// Before making a request print "Visiting ..."
