@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 
 	"github.com/gocolly/colly"
@@ -39,7 +40,7 @@ func main() {
 		if err != nil {
 			log.Println(err)
 		}
-		fmt.Println(string(jsonData))
+		_ = ioutil.WriteFile("test.json", jsonData, 0644)
 
 	})
 
