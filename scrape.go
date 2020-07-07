@@ -1,10 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/gocolly/colly"
 )
+
+type Song struct {
+	Lyrics string
+}
 
 // main() contains code adapted from example found in Colly's docs:
 // http://go-colly.org/docs/examples/basic/
@@ -24,8 +30,16 @@ func main() {
 	})
 
 	// On every a element which has href attribute call callback
-	c.OnHTML("#cmn_wrap > div.content.song-content.floatfix.js-lyric-desktop.js-lyric-vote > div > div.maincont.lyrics-content > div.js-share-text", func(e *colly.HTMLElement) {
-		fmt.Printf(e.Text)
+	c.OnHTML("#content", func(e *colly.HTMLElement) {
+		s := Song{Lyrics: e.Text}
+		// fmt.Println(s)
+
+		var jsonData []byte
+		jsonData, err := json.MarshalIndent(s, "", "    ")
+		if err != nil {
+			log.Println(err)
+		}
+		fmt.Println(string(jsonData))
 
 	})
 
